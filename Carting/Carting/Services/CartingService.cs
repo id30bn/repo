@@ -11,24 +11,24 @@ namespace Carting.Services
 			_repository = repository;
 		}
 
-		public async Task<ICollection<Item>> GetCartItemsAsync(int cartId)
+		public ICollection<Item> GetCartItems(int cartId)
 		{
-			return await _repository.GetCartItemsAsync(cartId);
+			return _repository.GetCartItems(cartId);
 		}
 
-		public async Task AddItemToCartAsync(int cartId, Item item)
+		public void AddItemToCart(int cartId, Item item)
 		{
-			await _repository.AddItemToCartAsync(cartId, item);
+			_repository.AddItemToCart(cartId, item);
 		}
 
-		public async Task RemoveItemFromCartAsync(int cartId, int itemId)
+		public void RemoveItemFromCart(int cartId, int itemId)
 		{
-			await _repository.DeleteCartItemAsync(cartId, itemId);
+			_repository.DeleteCartItem(cartId, itemId);
 		}
 
-		public async Task CreateCartAsync(Cart cart)
+		public void CreateCart(Cart cart)
 		{
-			await _repository.AddCartAsync(cart);
+			_repository.AddCart(cart);
 		}
 	}
 }

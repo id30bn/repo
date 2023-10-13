@@ -4,12 +4,12 @@ namespace Carting.Core.Interfaces
 {
 	public interface ICartingRepository
 	{
-		Task AddCartAsync(Cart cart);
+		void AddCart(Cart cart);
 
-		Task<ICollection<Item>> GetCartItemsAsync(int cartId);
+		ICollection<Item> GetCartItems(int cartId);
 
-		Task AddItemToCartAsync(int cartId, Item item);
+		void AddItemToCart(int cartId, Item item);
 
-		Task DeleteCartItemAsync(int cartId, int itemId);
+		void DeleteCartItem(int cartId, int itemId);
 	}
 }

@@ -4,12 +4,12 @@ namespace Carting.Services
 {
 	public interface ICartingService
 	{
-		Task CreateCartAsync(Cart cart);
+		void CreateCart(Cart cart);
 
-		Task<ICollection<Item>> GetCartItemsAsync(int cartId);
+		ICollection<Item> GetCartItems(int cartId);
 
-		Task AddItemToCartAsync(int cartId, Item item);
+		void AddItemToCart(int cartId, Item item);
 
-		Task RemoveItemFromCartAsync(int cartId, int itemId);
+		void RemoveItemFromCart(int cartId, int itemId);
 	}
 }

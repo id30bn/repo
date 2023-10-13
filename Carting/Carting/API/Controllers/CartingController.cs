@@ -16,9 +16,9 @@ namespace Carting.API.Controllers
 		}
 
 		[HttpGet("{cartId}")]
-		public async Task<IActionResult> Get(int cartId)
+		public IActionResult Get(int cartId)
 		{
-			var result = await _cartingService.GetCartItemsAsync(cartId);
+			var result = _cartingService.GetCartItems(cartId);
 			if (result == null) {
 				return NotFound();
 			}
@@ -26,31 +26,31 @@ namespace Carting.API.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post(Cart cart)
+		public IActionResult Post(Cart cart)
 		{
 			if (cart == null) {
 				return BadRequest();
 			}
 
-			await _cartingService.CreateCartAsync(cart);
+			_cartingService.CreateCart(cart);
 			return Ok();
 		}
 
 		[HttpPost("{cartId}")]
-		public async Task<IActionResult> Post(int cartId, Item item)
+		public IActionResult Post(int cartId, Item item)
 		{
 			if (item == null) {
 				return BadRequest();
 			}
 
-			await _cartingService.AddItemToCartAsync(cartId, item);
+			_cartingService.AddItemToCart(cartId, item);
 			return Ok();
 		}
 
 		[HttpDelete("{cartId}/{itemId}")]
-		public async Task<IActionResult> Delete(int cartId, int itemId)
+		public IActionResult Delete(int cartId, int itemId)
 		{
-			await _cartingService.RemoveItemFromCartAsync(cartId, itemId);
+			_cartingService.RemoveItemFromCart(cartId, itemId);
 			return Ok();
 		}
 	}
