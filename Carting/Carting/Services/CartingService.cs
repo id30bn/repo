@@ -1,0 +1,34 @@
+﻿using Carting.Core.Interfaces;
+using Carting.Core.Models.Cart;
+
+namespace Carting.Services
+{
+	public class CartingService : ICartingService
+	{
+		private readonly ICartingRepository _repository;
+		public CartingService(ICartingRepository repository)
+		{
+			_repository = repository;
+		}
+
+		public ICollection<Item> GetCartItems(int cartId)
+		{
+			return _repository.GetCartItems(cartId);
+		}
+
+		public void AddItemToCart(int cartId, Item item)
+		{
+			_repository.AddItemToCart(cartId, item);
+		}
+
+		public void RemoveItemFromCart(int cartId, int itemId)
+		{
+			_repository.DeleteCartItem(cartId, itemId);
+		}
+
+		public void CreateCart(Cart cart)
+		{
+			_repository.AddCart(cart);
+		}
+	}
+}
