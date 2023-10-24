@@ -6,6 +6,8 @@ namespace Application.Interfaces
 	{
 		Task<IEnumerable<Product>> ListAsync();
 
+		Task<IEnumerable<Product>> FindListAsync(ProductQueryParams queryParams);
+
 		Task<Product> GetByIdAsync(int id);
 
 		Task<Product> CreateAsync(Product product);

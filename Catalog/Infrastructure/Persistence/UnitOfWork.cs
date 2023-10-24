@@ -15,7 +15,7 @@ namespace Infrastructure.Persistence
 			_context = context;
 		}
 
-		public IRepository<Category> CategoryRepository
+		public ICategoryRepository CategoryRepository
 		{
 			get
 			{
@@ -26,7 +26,7 @@ namespace Infrastructure.Persistence
 			}
 		}
 
-		public IRepository<Item> ItemRepository
+		public IItemRepository ItemRepository
 		{
 			get
 			{

@@ -6,7 +6,7 @@ namespace Infrastructure.Persistence
 	public abstract class EfBaseRepository<TEntity> : IRepository<TEntity>
 		where TEntity: Entity
 	{
-		private readonly AppDbContext _context;
+		public readonly AppDbContext _context;
 
 		public EfBaseRepository(AppDbContext context)
 		{

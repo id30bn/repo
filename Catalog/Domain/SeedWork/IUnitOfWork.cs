@@ -4,9 +4,9 @@ namespace Domain.SeedWork
 {
 	public interface IUnitOfWork: IDisposable
 	{
-		IRepository<Category> CategoryRepository { get; }
+		ICategoryRepository CategoryRepository { get; }
 
-		IRepository<Item> ItemRepository { get; }
+		IItemRepository ItemRepository { get; }
 
 		Task<int> CommitAsync();
 	}

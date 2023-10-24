@@ -19,7 +19,7 @@ namespace Application.Services
 		{
 			var category = await _uof.CategoryRepository.GetByIdAsync(product.CategoryId);
 			if (category == null) {
-				throw new CategoryNotFoundException($"Cannot find category by id {product.CategoryId}");
+				throw new EntityNotFoundException($"Cannot find category by id {product.CategoryId}");
 			}
 
 			var domain = _uof.ItemRepository.Add(_mapper.MapToDomainProduct(product));
@@ -38,6 +38,16 @@ namespace Application.Services
 			return _mapper.MapToProductDTO(domain);
 		}
 
+		public async Task<IEnumerable<Product>> FindListAsync(ProductQueryParams queryParams)
+		{
+			int skip = queryParams.Limit * (queryParams.Page - 1);
+			int take = queryParams.Limit;
+
+			var domains = await _uof.ItemRepository
+				.FindListAsync(x => x.CategoryId == queryParams.CategoryId, skip, take);
+			return domains.Select(x => _mapper.MapToProductDTO(x));
+		}
+
 		public async Task<Product> GetByIdAsync(int id)
 		{
 			return _mapper.MapToProductDTO(await _uof.ItemRepository.GetByIdAsync(id));
@@ -53,7 +63,7 @@ namespace Application.Services
 		{
 			var category = await _uof.CategoryRepository.GetByIdAsync(product.CategoryId);
 			if (category == null) {
-				throw new CategoryNotFoundException($"Cannot find category by id {product.CategoryId}");
+				throw new EntityNotFoundException($"Cannot find category by id {product.CategoryId}");
 			}
 
 			var result = await _uof.ItemRepository.UpdateAsync(id, _mapper.MapToDomainProduct(product));

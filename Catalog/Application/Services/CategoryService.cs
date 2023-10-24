@@ -1,6 +1,5 @@
 ﻿using Application.Interfaces;
 using Application.Models;
-using Domain.Exceptions;
 using Domain.SeedWork;
 
 namespace Application.Services
