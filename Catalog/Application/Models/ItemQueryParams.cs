@@ -2,7 +2,7 @@
 
 namespace Application.Models
 {
-	public class ProductQueryParams : PageQueryParams
+	public class ItemQueryParams : PageQueryParams
 	{
 		/// <summary>
 		/// Category ID

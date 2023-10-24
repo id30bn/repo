@@ -4,14 +4,14 @@ namespace Application.Interfaces
 {
 	public interface ICategoryService
 	{
-		Task<IEnumerable<CategoryDTO>> ListAsync();
+		Task<IEnumerable<GetCategoryModel>> ListAsync();
 
-		Task<CategoryDTO> GetByIdAsync(int id);
+		Task<GetCategoryModel> GetByIdAsync(int id);
 
-		Task<CategoryDTO> CreateAsync(CategoryDTO category);
+		Task<GetCategoryModel> CreateAsync(PostCategoryModel category);
 
-		Task<CategoryDTO> UpdateAsync(int id, CategoryDTO category);
+		Task<GetCategoryModel> UpdateAsync(int id, PostCategoryModel category);
 
-		Task<CategoryDTO> DeleteAsync(int id);
+		Task<GetCategoryModel> DeleteAsync(int id);
 	}
 }

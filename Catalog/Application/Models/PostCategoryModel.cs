@@ -1,15 +1,17 @@
 ﻿namespace Application.Models
 {
-	public class CategoryDTO
+	/// <summary>
+	/// Category to create
+	/// </summary>
+	public class PostCategoryModel
 	{
-		public int? Id { get; set; }
-
 		public string Name { get; set; }
 
 		public string? ImageUrl { get; set; }
 
+		/// <summary>
+		/// ID of parent category
+		/// </summary>
 		public int? ParentId { get; set; }
-
-		public CategoryDTO? Parent { get; set; }
 	}
 }

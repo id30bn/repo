@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[ResponseCache(CacheProfileName = "DefaultCacheProfile")]
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<CategoryDTO>>> Get()
+		public async Task<ActionResult<IEnumerable<GetCategoryModel>>> Get()
 		{
 			return Ok(await _categoryService.ListAsync());
 		}
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[ResponseCache(CacheProfileName = "DefaultCacheProfile")]
 		[HttpGet("{id}")]
-		public async Task<ActionResult<CategoryDTO>> Get(int id)
+		public async Task<ActionResult<GetCategoryModel>> Get(int id)
 		{
 			var category = await _categoryService.GetByIdAsync(id);
 			if (category == null) {
@@ -72,7 +72,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpPut("{id}")]
-		public async Task<ActionResult<CategoryDTO>> Put(int id, CategoryDTO category)
+		public async Task<ActionResult<GetCategoryModel>> Put(int id, PostCategoryModel category)
 		{
 			var result = await _categoryService.UpdateAsync(id, category);
 			return result == null ? NotFound() : Ok(result);
@@ -92,7 +92,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpPost]
-		public async Task<ActionResult<CategoryDTO>> Post(CategoryDTO category)
+		public async Task<ActionResult<GetCategoryModel>> Post(PostCategoryModel category)
 		{
 			var createdCategory = await _categoryService.CreateAsync(category);
 			return CreatedAtAction(nameof(Get), routeValues: new { id = createdCategory.Id }, createdCategory);
@@ -110,7 +110,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status406NotAcceptable)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpDelete("{id}")]
-		public async Task<ActionResult<CategoryDTO>> Delete(int id)
+		public async Task<ActionResult<GetCategoryModel>> Delete(int id)
 		{
 			var category = await _categoryService.DeleteAsync(id);
 			if (category == null) {

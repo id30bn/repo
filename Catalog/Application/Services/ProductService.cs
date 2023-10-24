@@ -1,33 +1,36 @@
 ﻿using Application.Interfaces;
 using Application.Models;
+using AutoMapper;
+using Domain.CategoryAggregate;
 using Domain.Exceptions;
 using Domain.SeedWork;
 
 namespace Application.Services
 {
+	// item aka product
 	public class ProductService : IProductService
 	{
 		private readonly IUnitOfWork _uof;
-		private readonly IDtoMapper _mapper;
-		public ProductService(IUnitOfWork uof, IDtoMapper mapper)
+		private readonly IMapper _mapper;
+		public ProductService(IUnitOfWork uof, IMapper mapper)
 		{
 			_uof = uof;
 			_mapper = mapper;
 		}
 
-		public async Task<Product> CreateAsync(Product product)
+		public async Task<GetItemModel> CreateAsync(PostItemModel item)
 		{
-			var category = await _uof.CategoryRepository.GetByIdAsync(product.CategoryId);
+			var category = await _uof.CategoryRepository.GetByIdAsync(item.CategoryId);
 			if (category == null) {
-				throw new EntityNotFoundException($"Cannot find category by id {product.CategoryId}");
+				throw new EntityNotFoundException($"Cannot find category by id {item.CategoryId}");
 			}
 
-			var domain = _uof.ItemRepository.Add(_mapper.MapToDomainProduct(product));
+			var domain = _uof.ItemRepository.Add(_mapper.Map<Item>(item));
 			await _uof.CommitAsync();
-			return _mapper.MapToProductDTO(domain);
+			return _mapper.Map<GetItemModel>(domain);
 		}
 
-		public async Task<Product> DeleteAsync(int id)
+		public async Task<GetItemModel> DeleteAsync(int id)
 		{
 			var domain = await _uof.ItemRepository.GetByIdAsync(id);
 			if (domain != null) {
@@ -35,42 +38,43 @@ namespace Application.Services
 				await _uof.CommitAsync();
 			}
 
-			return _mapper.MapToProductDTO(domain);
+			return _mapper.Map<GetItemModel>(domain);
 		}
 
-		public async Task<IEnumerable<Product>> FindListAsync(ProductQueryParams queryParams)
+		public async Task<IEnumerable<GetItemModel>> FindListAsync(ItemQueryParams queryParams)
 		{
 			int skip = queryParams.Limit * (queryParams.Page - 1);
 			int take = queryParams.Limit;
 
 			var domains = await _uof.ItemRepository
 				.FindListAsync(x => x.CategoryId == queryParams.CategoryId, skip, take);
-			return domains.Select(x => _mapper.MapToProductDTO(x));
+			return _mapper.Map<IEnumerable<Item>, IEnumerable<GetItemModel>>(domains);
 		}
 
-		public async Task<Product> GetByIdAsync(int id)
+		public async Task<GetItemModel> GetByIdAsync(int id)
 		{
-			return _mapper.MapToProductDTO(await _uof.ItemRepository.GetByIdAsync(id));
+			return _mapper.Map<GetItemModel>(await _uof.ItemRepository.GetByIdAsync(id));
 		}
 
-		public async Task<IEnumerable<Product>> ListAsync()
+		public async Task<IEnumerable<GetItemModel>> ListAsync()
 		{
 			var domains = await _uof.ItemRepository.GetAllAsync();
-			return domains.Select(x => _mapper.MapToProductDTO(x));
+			return _mapper.Map<IEnumerable<Item>, IEnumerable<GetItemModel>>(domains);
 		}
 
-		public async Task<Product> UpdateAsync(int id, Product product)
+		public async Task<GetItemModel> UpdateAsync(int id, PostItemModel item)
 		{
-			var category = await _uof.CategoryRepository.GetByIdAsync(product.CategoryId);
+			var category = await _uof.CategoryRepository.GetByIdAsync(item.CategoryId);
 			if (category == null) {
-				throw new EntityNotFoundException($"Cannot find category by id {product.CategoryId}");
+				throw new EntityNotFoundException($"Cannot find category by id {item.CategoryId}");
 			}
 
-			var result = await _uof.ItemRepository.UpdateAsync(id, _mapper.MapToDomainProduct(product));
+			var result = await _uof.ItemRepository.UpdateAsync(id, _mapper.Map<Item>(item));
 			if (result != null) {
 				await _uof.CommitAsync();
 			}
-			return _mapper.MapToProductDTO(result);
+
+			return _mapper.Map<GetItemModel>(result);
 		}
 	}
 }

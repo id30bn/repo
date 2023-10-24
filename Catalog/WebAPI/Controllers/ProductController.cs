@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpGet("{id}", Name = nameof(GetItem))]
 		[ResponseCache(CacheProfileName = "DefaultCacheProfile")]
-		public async Task<ActionResult<Product>> GetItem(int id)
+		public async Task<ActionResult<GetItemModel>> GetItem(int id)
 		{
 			var category = await _productService.GetByIdAsync(id);
 			if (category == null) {
@@ -51,7 +51,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpGet(Name = nameof(GetItems))]
 		[ResponseCache(CacheProfileName = "DefaultCacheProfile")]
-		public async Task<ActionResult<IEnumerable<Product>>> GetItems([FromQuery] ProductQueryParams queryParams)
+		public async Task<ActionResult<IEnumerable<GetItemModel>>> GetItems([FromQuery] ItemQueryParams queryParams)
 		{
 			if (!HttpContext.Request.QueryString.HasValue) {
 				return Ok(await _productService.ListAsync());
@@ -76,9 +76,9 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpPut("{id}")]
-		public async Task<ActionResult<Product>> Put(int id, Product product)
+		public async Task<ActionResult<GetItemModel>> Put(int id, PostItemModel item)
 		{
-			var result = await _productService.UpdateAsync(id, product);
+			var result = await _productService.UpdateAsync(id, item);
 			return result == null ? NotFound() : Ok(result);
 		}
 
@@ -96,9 +96,9 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpPost]
-		public async Task<ActionResult<Product>> Post(Product product)
+		public async Task<ActionResult<GetItemModel>> Post(PostItemModel item)
 		{
-			var createdProduct = await _productService.CreateAsync(product);
+			var createdProduct = await _productService.CreateAsync(item);
 			return CreatedAtAction(nameof(GetItem), routeValues: new { id = createdProduct.Id }, createdProduct);
 		}
 
@@ -114,7 +114,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status406NotAcceptable)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpDelete("{id}")]
-		public async Task<ActionResult<Product>> Delete(int id)
+		public async Task<ActionResult<GetItemModel>> Delete(int id)
 		{
 			var product = await _productService.DeleteAsync(id);
 			if (product == null) {

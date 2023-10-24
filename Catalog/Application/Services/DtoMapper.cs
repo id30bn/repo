@@ -4,9 +4,10 @@ using Domain.CategoryAggregate;
 
 namespace Application.Services
 {
+	[Obsolete("Use AutoMapper profiles instead")]
 	public class DtoMapper : IDtoMapper
 	{
-		public Category MapToDomainCategory(CategoryDTO category)
+		public Category MapToDomainCategory(GetCategoryModel category)
 		{
 			if (category == null) {
 				return null;
@@ -15,13 +16,13 @@ namespace Application.Services
 			return new Category(category.Name, category.ParentId, category.ImageUrl);
 		}
 
-		public CategoryDTO MapToCategoryDTO(Category category)
+		public GetCategoryModel MapToCategoryDTO(Category category)
 		{
 			if (category == null) {
 				return null;
 			}
 
-			return new CategoryDTO {
+			return new GetCategoryModel {
 				Id = category.Id,
 				Name = category.Name,
 				ImageUrl = category.Image?.Url,
@@ -30,7 +31,7 @@ namespace Application.Services
 			};
 		}
 
-		public Item MapToDomainProduct(Product product)
+		public Item MapToDomainProduct(GetItemModel product)
 		{
 			if (product == null) {
 				return null;
@@ -45,13 +46,13 @@ namespace Application.Services
 			);
 		}
 
-		public Product MapToProductDTO(Item item)
+		public GetItemModel MapToProductDTO(Item item)
 		{
 			if (item == null) {
 				return null;
 			}
 
-			return new Product {
+			return new GetItemModel {
 				Id = item.Id,
 				Name = item.Name,
 				ImageUrl = item.Image?.Url,

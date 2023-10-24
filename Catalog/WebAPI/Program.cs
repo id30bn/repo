@@ -1,5 +1,4 @@
-using Application.Interfaces;
-using Application.Services;
+using Application;
 using Infrastructure;
 using WebAPI.Setup;
 
@@ -9,11 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureApi();
-
+builder.Services.ConfigureApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddSingleton<IDtoMapper, DtoMapper>();
 
 var app = builder.Build();
 

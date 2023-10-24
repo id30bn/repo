@@ -4,16 +4,16 @@ namespace Application.Interfaces
 {
 	public interface IProductService
 	{
-		Task<IEnumerable<Product>> ListAsync();
+		Task<IEnumerable<GetItemModel>> ListAsync();
 
-		Task<IEnumerable<Product>> FindListAsync(ProductQueryParams queryParams);
+		Task<IEnumerable<GetItemModel>> FindListAsync(ItemQueryParams queryParams);
 
-		Task<Product> GetByIdAsync(int id);
+		Task<GetItemModel> GetByIdAsync(int id);
 
-		Task<Product> CreateAsync(Product product);
+		Task<GetItemModel> CreateAsync(PostItemModel item);
 
-		Task<Product> UpdateAsync(int id, Product product);
+		Task<GetItemModel> UpdateAsync(int id, PostItemModel item);
 
-		Task<Product> DeleteAsync(int id);
+		Task<GetItemModel> DeleteAsync(int id);
 	}
 }

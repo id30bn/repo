@@ -3,14 +3,15 @@ using Domain.CategoryAggregate;
 
 namespace Application.Interfaces
 {
+	[Obsolete("Use AutoMapper profiles instead")]
 	public interface IDtoMapper
 	{
-		Category MapToDomainCategory(CategoryDTO category);
+		Category MapToDomainCategory(GetCategoryModel category);
 
-		CategoryDTO MapToCategoryDTO(Category category);
+		GetCategoryModel MapToCategoryDTO(Category category);
 
-		Item MapToDomainProduct(Product product);
+		Item MapToDomainProduct(GetItemModel product);
 
-		Product MapToProductDTO(Item item);
+		GetItemModel MapToProductDTO(Item item);
 	}
 }
