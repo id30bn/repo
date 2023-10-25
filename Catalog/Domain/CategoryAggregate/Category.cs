@@ -13,7 +13,7 @@ namespace Domain.CategoryAggregate
 			}
 
 			Name = name;
-			Image = (imageUrl == null) ? null : new Image(imageUrl);
+			SetImage(imageUrl);
 			ParentId = parentId;
 		}
 
@@ -23,5 +23,10 @@ namespace Domain.CategoryAggregate
 
 		public int? ParentId { get; private set; }
 		public Category? Parent { get; private set; }
+
+		public void SetImage(string imageUrl)
+		{
+			Image = (imageUrl == null) ? null : new Image(imageUrl);
+		}
 	}
 }

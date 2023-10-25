@@ -16,5 +16,24 @@ namespace Infrastructure.Persistence
 				.Take(take)
 				.ToListAsync();
 		}
+
+		public override async Task<Item> UpdateAsync(int id, Item updatedEntity)
+		{
+			var domain = await GetByIdAsync(id);
+			if (domain == null) {
+				return null;
+			}
+
+			updatedEntity.Id = domain.Id;
+
+			// for owned entities
+			domain.SetImage(updatedEntity.Image?.Url);
+			domain.SetDescription(updatedEntity.Description?.Text);
+
+			// for other properties
+			_context.Entry(domain).CurrentValues.SetValues(updatedEntity);
+
+			return updatedEntity;
+		}
 	}
 }

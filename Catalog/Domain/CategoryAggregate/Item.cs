@@ -19,8 +19,8 @@ namespace Domain.CategoryAggregate
 			Name = name;
 			CategoryId = categoryId;
 			Price = price;
-			Image = (imageUrl == null) ? null : new Image(imageUrl);
-			Description = (description == null) ? null : new Description(description);
+			SetImage(imageUrl);
+			SetDescription(description);
 			Price = price;
 			Amount = amount;
 		}
@@ -38,5 +38,15 @@ namespace Domain.CategoryAggregate
 		public decimal Price { get; private set; }
 
 		public int Amount { get; private set; } // can be just get also
+
+		public void SetImage(string imageUrl)
+		{
+			Image = (imageUrl == null) ? null : new Image(imageUrl);
+		}
+
+		public void SetDescription(string description)
+		{
+			Description = (description == null) ? null : new Description(description);
+		}
 	}
 }

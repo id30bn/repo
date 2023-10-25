@@ -33,7 +33,7 @@ namespace Infrastructure.Persistence
 			_context.Set<TEntity>().Remove(entity);
 		}
 
-		public async Task<TEntity> UpdateAsync(int id, TEntity entity)
+		public virtual async Task<TEntity> UpdateAsync(int id, TEntity entity)
 		{
 			var domain = await GetByIdAsync(id);
 			if (domain == null) {
@@ -43,6 +43,9 @@ namespace Infrastructure.Persistence
 			_context.Entry(domain).State = EntityState.Detached;
 			entity.Id = domain.Id;
 			_context.Entry(entity).State = EntityState.Modified;
+
+			//_context.Entry(domain).CurrentValues.SetValues(entity);
+
 			return entity;
 		}
 	}

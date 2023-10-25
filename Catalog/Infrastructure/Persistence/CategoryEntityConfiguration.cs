@@ -11,11 +11,11 @@ namespace Infrastructure.Persistence
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Name).HasMaxLength(50);
 			builder.OwnsOne(x => x.Image);
-			builder.HasOne(x => x.Parent)
-				.WithOne()
-				.HasForeignKey<Category>(x => x.ParentId)
-				.OnDelete(DeleteBehavior.Restrict)
-				.IsRequired(false);
+			builder.HasOne(x => x.Parent);
+				//.WithOne()
+				//.HasForeignKey<Category>(x => x.ParentId)
+				//.OnDelete(DeleteBehavior.Restrict)
+				//.IsRequired(false);
 		}
     }
 }
