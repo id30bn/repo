@@ -6,10 +6,12 @@ namespace Carting.Core.Interfaces
 	{
 		void AddCart(Cart cart);
 
+		Cart GetCart(int cartId);
+
 		ICollection<Item> GetCartItems(int cartId);
 
 		void AddItemToCart(int cartId, Item item);
 
-		void DeleteCartItem(int cartId, int itemId);
+		Item DeleteCartItem(int cartId, int itemId);
 	}
 }

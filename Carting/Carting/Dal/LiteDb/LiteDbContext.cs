@@ -12,7 +12,9 @@ namespace Carting.Dal.LiteDb
 		{
 			Database = new LiteDatabase(options.Value.DatabaseLocation);
 
-			// comment these lines if you don't want to handle separate Items collection (cascade deletion etc.)
+			// you could have only one Carts collection without the need for handling cascade deletion etc.
+			// also these lines are needed for the "Include" logic
+
 			var mapper = BsonMapper.Global;
 			mapper.Entity<Cart>()
 				.DbRef(x => x.Items);

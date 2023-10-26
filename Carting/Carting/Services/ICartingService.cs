@@ -6,10 +6,12 @@ namespace Carting.Services
 	{
 		void CreateCart(Cart cart);
 
+		Cart GetCart(int cartId);
+
 		ICollection<Item> GetCartItems(int cartId);
 
 		void AddItemToCart(int cartId, Item item);
 
-		void RemoveItemFromCart(int cartId, int itemId);
+		Item RemoveItemFromCart(int cartId, int itemId);
 	}
 }

@@ -13,44 +13,56 @@ namespace Carting.Dal.LiteDb
 			_database = context.Database;
 		}
 
-		public ICollection<Item> GetCartItems(int cartId)
-		{
-			return _database.GetCollection<Cart>()
-				.Query()
-				.Include(x => x.Items)
-				.Where(x => x.Id == cartId)
-				.FirstOrDefault()
-				?.Items;
-		}
-
 		public void AddItemToCart(int cartId, Item item)
 		{
-			var cart = _database.GetCollection<Cart>().FindById(cartId);
-			if (cart != null) {
+			var cart = _database.GetCollection<Cart>().FindById(cartId) ?? new Cart(cartId);
+
+			if (_database.GetCollection<Item>().FindById(item.Id) == null) {
 				_database.GetCollection<Item>().Insert(item);
-				cart.Items.Add(item);
-				_database.GetCollection<Cart>().Update(cart);
 			}
+
+			cart.Items.Add(item);
+			_database.GetCollection<Cart>().Delete(cartId);
+			_database.GetCollection<Cart>().Insert(cart);
 		}
 
-		public void DeleteCartItem(int cartId, int itemId)
+		public Item DeleteCartItem(int cartId, int itemId)
 		{
 			var cart = _database.GetCollection<Cart>().FindById(cartId);
-			if (cart != null) {
-				var itemToDelete = cart.Items.FirstOrDefault(x => x.Id == itemId);
-				if (itemToDelete != null) {
-					cart.Items.Remove(itemToDelete);
-					_database.GetCollection<Cart>().Update(cart);
-					_database.GetCollection<Item>().Delete(itemToDelete.Id);
-				}
+			if (cart == null) {
+				return null;
 			}
 
+			var itemToDelete = cart.Items.FirstOrDefault(x => x.Id == itemId);
+			if (itemToDelete == null) {
+				return null;
+			}
+			cart.Items.Remove(itemToDelete);
+			_database.GetCollection<Cart>().Update(cart);
+			// other carts may have this item
+			//_database.GetCollection<Item>().Delete(itemToDelete.Id);
+
+			return itemToDelete;
 		}
 
 		public void AddCart(Cart cart)
 		{
 			_database.GetCollection<Cart>().Insert(cart);
 			_database.GetCollection<Item>().Insert(cart.Items);
+		}
+
+		public Cart GetCart(int cartId)
+		{
+			return _database.GetCollection<Cart>()
+				.Query()
+				.Include(x => x.Items)
+				.Where(x => x.Id == cartId)
+				.FirstOrDefault();
+		}
+
+		public ICollection<Item> GetCartItems(int cartId)
+		{
+			return GetCart(cartId)?.Items;
 		}
 	}
 }

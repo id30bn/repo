@@ -21,14 +21,19 @@ namespace Carting.Services
 			_repository.AddItemToCart(cartId, item);
 		}
 
-		public void RemoveItemFromCart(int cartId, int itemId)
+		public Item RemoveItemFromCart(int cartId, int itemId)
 		{
-			_repository.DeleteCartItem(cartId, itemId);
+			return _repository.DeleteCartItem(cartId, itemId);
 		}
 
 		public void CreateCart(Cart cart)
 		{
 			_repository.AddCart(cart);
+		}
+
+		public Cart GetCart(int cartId)
+		{
+			return _repository.GetCart(cartId);
 		}
 	}
 }

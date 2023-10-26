@@ -2,8 +2,13 @@
 {
     public class Cart
     {
-        public int Id { get; set; }
+		public Cart(int id)
+		{
+			Id = id;
+		}
 
-        public ICollection<Item> Items { get; set; } = new List<Item>(); 
+		public int Id { get; private set; }
+
+        public ICollection<Item> Items { get; private set; } = new List<Item>(); 
     }
 }
