@@ -37,6 +37,7 @@ namespace WebAPI.Controllers
 		/// <summary>
 		/// Find a category by ID
 		/// </summary>
+		/// <param name="id">ID of the category to return</param>
 		/// <response code="200">The category was found</response>
 		/// <response code="404">The category was not found</response>
 		/// <response code="406">When a request is specified in an unsupported content type using the Accept header</response>
@@ -59,6 +60,8 @@ namespace WebAPI.Controllers
 		/// <summary>
 		/// Update an existing category
 		/// </summary>
+		/// <param name="id">ID of the category to update</param>
+		/// <param name="category">new category</param>
 		/// <response code="200">The category was updated successfully</response>
 		/// <response code="400">The request could not be understood by the server due to malformed syntax. The client should not repeat the request without modifications</response>
 		/// <response code="404">The category was not found for specified category ID</response>
@@ -81,6 +84,7 @@ namespace WebAPI.Controllers
 		/// <summary>
 		/// Create a new category
 		/// </summary>
+		/// <param name="category">new category to create</param>
 		/// <response code="201">The category was created successfully. Also includes 'location' header to newly created item</response>
 		/// <response code="400">The request could not be understood by the server due to malformed syntax. The client should not repeat the request without modifications</response>
 		/// <response code="406">When a request is specified in an unsupported content type using the Accept header</response>
@@ -101,6 +105,7 @@ namespace WebAPI.Controllers
 		/// <summary>
 		/// Delete category with the related items
 		/// </summary>
+		/// <param name="id">ID of the category to delete</param>
 		/// <response code="200">The category was deleted successfully.</response>
 		/// <response code="404">An category having specified item ID was not found</response>
 		/// <response code="406">When a request is specified in an unsupported content type using the Accept header</response>

@@ -21,6 +21,7 @@ namespace WebAPI.Controllers
 		/// <summary>
 		/// Find an item by ID
 		/// </summary>
+		/// <param name="id">ID of the item to get</param>
 		/// <response code="200">The item was found</response>
 		/// <response code="404">The item was not found</response>
 		/// <response code="406">When a request is specified in an unsupported content type using the Accept header</response>
@@ -105,6 +106,7 @@ namespace WebAPI.Controllers
 		/// <summary>
 		/// Delete item
 		/// </summary>
+		/// <param name="id">ID of the item to delete</param>
 		/// <response code="200">The item was deleted successfully.</response>
 		/// <response code="404">An item having specified item ID was not found</response>
 		/// <response code="406">When a request is specified in an unsupported content type using the Accept header</response>
