@@ -38,6 +38,16 @@ namespace Carting.API.Controllers
 			return Ok(result);
 		}
 
+		/// <summary>
+		/// Receives cart items
+		/// </summary>
+		/// <param name="id">ID of the cart to get</param>
+		/// <response code="200">The item was found</response>
+		/// <response code="404">The item was not found</response>
+		/// <response code="500">A server fault occurred</response>
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[MapToApiVersion("2.0")]
 		[HttpGet("{cartId}")]
 		public IActionResult GetV2(int cartId)
