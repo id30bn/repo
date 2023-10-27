@@ -107,7 +107,7 @@ namespace WebAPI.Controllers
 		/// Delete item
 		/// </summary>
 		/// <param name="id">ID of the item to delete</param>
-		/// <response code="200">The item was deleted successfully.</response>
+		/// <response code="200">The item was deleted successfully</response>
 		/// <response code="404">An item having specified item ID was not found</response>
 		/// <response code="406">When a request is specified in an unsupported content type using the Accept header</response>
 		/// <response code="500">A server fault occurred</response>

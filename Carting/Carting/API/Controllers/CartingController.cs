@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Carting.Core.Models.Cart;
 using Carting.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -5,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Carting.API.Controllers
 {
 	[ApiController]
-	[Route("carts")]
+	[ApiVersion("1.0")]
+	[ApiVersion("2.0")]
+	[Route("api/v{version:apiVersion}/carts")]
 	public class CartingController : ControllerBase
 	{
 		private readonly ICartingService _cartingService;
@@ -35,6 +38,17 @@ namespace Carting.API.Controllers
 			return Ok(result);
 		}
 
+		[MapToApiVersion("2.0")]
+		[HttpGet("{cartId}")]
+		public IActionResult GetV2(int cartId)
+		{
+			var result = _cartingService.GetCartItems(cartId);
+			if (result == null) {
+				return NotFound();
+			}
+			return Ok(result);
+		}
+
 		/// <summary>
 		/// Creates a cart
 		/// </summary>
@@ -47,7 +61,7 @@ namespace Carting.API.Controllers
 		public IActionResult Post(Cart cart)
 		{
 			_cartingService.CreateCart(cart);
-			return CreatedAtAction(nameof(Get), routeValues: new { id = cart.Id }, cart);
+			return CreatedAtAction(nameof(Get), routeValues: new { cartId = cart.Id }, cart);
 		}
 
 		/// <summary>
@@ -71,10 +85,10 @@ namespace Carting.API.Controllers
 		/// </summary>
 		/// <param name="cartId">cart ID</param>
 		/// <param name="itemId">ID of an item to delete</param>
-		/// <response code="201">The item was deleted</response>
+		/// <response code="200">The item was deleted successfully</response>
 		/// <response code="404">An item having specified item ID was not found</response>
 		/// <response code="500">A server fault occurred</response>
-		[ProducesResponseType(StatusCodes.Status201Created)]
+		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpDelete("{cartId}/{itemId}")]
