@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MessageBroker.Shared", "MessageBroker.Shared\MessageBroker.Shared.shproj", "{36F8CC31-D07C-47CF-B382-5947F1E5A39B}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1BD06D8E-1F1F-47B4-A039-3977A68B6D6F}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		MessageBroker.Shared\MessageBroker.Shared.projitems*{36f8cc31-d07c-47cf-b382-5947f1e5a39b}*SharedItemsImports = 13
+	EndGlobalSection
+EndGlobal

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{1F29C2ED-77A5-454A-B491-A9E0295C0138}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{1F29C2ED-77A5-454A-B491-A9E0295C0138}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{B0C7F30E-2143-4A08-823E-761DFEA2696C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{B0C7F30E-2143-4A08-823E-761DFEA2696C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{50418250-EA49-4AAF-B408-C9D6878F8099}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{50418250-EA49-4AAF-B408-C9D6878F8099}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{662CA9D2-B7AA-4711-AD2F-86BB54C4C7E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{662CA9D2-B7AA-4711-AD2F-86BB54C4C7E6}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MessageBroker.Shared", "..\MessageBroker\MessageBroker.Shared\MessageBroker.Shared.shproj", "{36F8CC31-D07C-47CF-B382-5947F1E5A39B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,5 +41,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D31B508B-ABB7-44BB-85AF-2CE32F34138E}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\MessageBroker\MessageBroker.Shared\MessageBroker.Shared.projitems*{36f8cc31-d07c-47cf-b382-5947f1e5a39b}*SharedItemsImports = 13
+		..\MessageBroker\MessageBroker.Shared\MessageBroker.Shared.projitems*{b0c7f30e-2143-4a08-823e-761dfea2696c}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

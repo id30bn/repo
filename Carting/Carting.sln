@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carting", "Carting\Carting.csproj", "{E950B613-0979-4DEF-925B-224ABA7FC3C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Carting", "Carting\Carting.csproj", "{E950B613-0979-4DEF-925B-224ABA7FC3C3}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MessageBroker.Shared", "..\MessageBroker\MessageBroker.Shared\MessageBroker.Shared.shproj", "{36F8CC31-D07C-47CF-B382-5947F1E5A39B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,5 +23,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0DB9A8B9-B84C-4CB2-B6F8-85849751C09A}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\MessageBroker\MessageBroker.Shared\MessageBroker.Shared.projitems*{36f8cc31-d07c-47cf-b382-5947f1e5a39b}*SharedItemsImports = 13
+		..\MessageBroker\MessageBroker.Shared\MessageBroker.Shared.projitems*{e950b613-0979-4def-925b-224aba7fc3c3}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
