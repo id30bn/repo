@@ -12,10 +12,13 @@ namespace Application.Services
 	{
 		private readonly IUnitOfWork _uof;
 		private readonly IMapper _mapper;
-		public ProductService(IUnitOfWork uof, IMapper mapper)
+		private readonly INotificationService _notificationService;
+
+		public ProductService(IUnitOfWork uof, IMapper mapper, INotificationService notificationService)
 		{
 			_uof = uof;
 			_mapper = mapper;
+			_notificationService = notificationService;
 		}
 
 		public async Task<GetItemModel> CreateAsync(PostItemModel item)
@@ -70,11 +73,15 @@ namespace Application.Services
 			}
 
 			var result = await _uof.ItemRepository.UpdateAsync(id, _mapper.Map<Item>(item));
+			GetItemModel mappedResult = null;
+
 			if (result != null) {
 				await _uof.CommitAsync();
+				mappedResult = _mapper.Map<GetItemModel>(result);
+				_notificationService.NotifyProductUpdated(mappedResult);
 			}
 
-			return _mapper.Map<GetItemModel>(result);
+			return mappedResult;
 		}
 	}
 }

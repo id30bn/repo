@@ -8,4 +8,11 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>MessageBroker.Shared</Import_RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IRabbitMqReceiverService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IRabbitMqSenderService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RoutingKey.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\RabbitMqListener.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\RabbitMqSenderService.cs" />
+  </ItemGroup>
 </Project>

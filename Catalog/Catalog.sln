@@ -44,6 +44,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\MessageBroker\MessageBroker.Shared\MessageBroker.Shared.projitems*{36f8cc31-d07c-47cf-b382-5947f1e5a39b}*SharedItemsImports = 13
-		..\MessageBroker\MessageBroker.Shared\MessageBroker.Shared.projitems*{b0c7f30e-2143-4a08-823e-761dfea2696c}*SharedItemsImports = 5
+		..\MessageBroker\MessageBroker.Shared\MessageBroker.Shared.projitems*{50418250-ea49-4aaf-b408-c9d6878f8099}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

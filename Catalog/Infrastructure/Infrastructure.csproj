@@ -18,6 +18,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <Import Project="..\..\MessageBroker\MessageBroker.Shared\MessageBroker.Shared.projitems" Label="Shared" />
-
 </Project>

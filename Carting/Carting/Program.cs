@@ -3,7 +3,12 @@ using Asp.Versioning.ApiExplorer;
 using Carting.Core.Interfaces;
 using Carting.Dal.LiteDb;
 using Carting.Services;
+using Carting.Services.MessageBroker;
 using Carting.Setup;
+using MessageBroker.Shared.Interfaces;
+using MessageBroker.Shared.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +44,23 @@ builder.Services.AddSingleton<ILiteDbContext, LiteDbContext>();
 
 builder.Services.AddScoped<ICartingRepository, CartingRepository>();
 builder.Services.AddScoped<ICartingService, CartingService>();
+
+//builder.Services.AddHostedService(serviceProvider =>
+//	new RabbitMqListener("item", channel => new ItemMessageConsumer(channel, serviceProvider.GetService<ICartingService>()))
+//);
+
+//builder.Services.AddScoped<IRabbitMqReceiverService, RabbitMqReceiverService>(serviceProvider =>
+//	new RabbitMqReceiverService("item", channel => new ItemMessageConsumer(channel, serviceProvider.GetService<ICartingService>()))
+//);
+
+builder.Services.AddScoped<IRabbitMqFactory, RabbitMqFactory>();
+
+builder.Services.AddHostedService(serviceProvider => {
+	using (var scope = serviceProvider.CreateScope()) {
+		var receiverService = scope.ServiceProvider.GetRequiredService<IRabbitMqFactory>();
+		return new CatalogListenerService(receiverService);
+	}
+});
 
 var app = builder.Build();
 
