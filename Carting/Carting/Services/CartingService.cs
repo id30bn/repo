@@ -35,5 +35,15 @@ namespace Carting.Services
 		{
 			return _repository.GetCart(cartId);
 		}
+
+		public ICollection<Item> GetAllItems()
+		{
+			return _repository.GetAllItems();
+		}
+
+		public Item UpdateItem(Item newItem)
+		{
+			return _repository.UpdateItem(newItem);
+		}
 	}
 }

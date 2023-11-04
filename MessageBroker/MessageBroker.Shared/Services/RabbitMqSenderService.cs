@@ -9,7 +9,10 @@ namespace MessageBroker.Shared.Services
 	{
 		public void SendMessage(object obj)
 		{
-			var message = JsonSerializer.Serialize(obj);
+			var serializeOptions = new JsonSerializerOptions {
+				PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+			};
+			var message = JsonSerializer.Serialize(obj, serializeOptions);
 			SendMessage(message);
 		}
 

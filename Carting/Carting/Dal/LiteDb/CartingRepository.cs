@@ -39,7 +39,7 @@ namespace Carting.Dal.LiteDb
 			}
 			cart.Items.Remove(itemToDelete);
 			_database.GetCollection<Cart>().Update(cart);
-			// other carts may have this item
+			// other carts may have this item so we can't delete it everywhere like:
 			//_database.GetCollection<Item>().Delete(itemToDelete.Id);
 
 			return itemToDelete;
@@ -63,6 +63,20 @@ namespace Carting.Dal.LiteDb
 		public ICollection<Item> GetCartItems(int cartId)
 		{
 			return GetCart(cartId)?.Items;
+		}
+
+		public ICollection<Item> GetAllItems()
+		{
+			return _database.GetCollection<Item>().FindAll().ToArray();
+		}
+
+		public Item UpdateItem(Item newItem)
+		{
+			if (_database.GetCollection<Item>().FindById(newItem.Id) == null) {
+				return null;
+			}
+			_database.GetCollection<Item>().Update(newItem);
+			return newItem;
 		}
 	}
 }

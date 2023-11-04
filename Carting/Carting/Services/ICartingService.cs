@@ -13,5 +13,9 @@ namespace Carting.Services
 		void AddItemToCart(int cartId, Item item);
 
 		Item RemoveItemFromCart(int cartId, int itemId);
+
+		ICollection<Item> GetAllItems();
+
+		Item UpdateItem(Item newItem);
 	}
 }

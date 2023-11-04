@@ -5,10 +5,6 @@ using Carting.Dal.LiteDb;
 using Carting.Services;
 using Carting.Services.MessageBroker;
 using Carting.Setup;
-using MessageBroker.Shared.Interfaces;
-using MessageBroker.Shared.Services;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 

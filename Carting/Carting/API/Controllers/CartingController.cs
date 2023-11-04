@@ -111,5 +111,25 @@ namespace Carting.API.Controllers
 
 			return Ok(deletedItem);
 		}
+
+		[HttpGet("items")]
+		public IActionResult GetItems()
+		{
+			var result = _cartingService.GetAllItems();
+			if (result == null) {
+				return NotFound();
+			}
+			return Ok(result);
+		}
+
+		[HttpPut("items")]
+		public IActionResult UpdateItem(Item item)
+		{
+			var result = _cartingService.UpdateItem(item);
+			if (result == null) {
+				return NotFound();
+			}
+			return Ok(result);
+		}
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using Carting.Core.Models.Cart;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
-using System.Text.Json;
 
 namespace Carting.Services.MessageBroker
 {
@@ -9,11 +9,15 @@ namespace Carting.Services.MessageBroker
 	{
 		private readonly IModel _channel;
 		private readonly ICartingService _cartingService;
+		private JsonSerializerSettings _jsonSettings;
 
 		public ItemMessageConsumer(IModel channel, ICartingService cartingService)
 		{
 			_channel = channel;
 			_cartingService = cartingService;
+			_jsonSettings = new JsonSerializerSettings() {
+				Converters = new List<JsonConverter> { new ItemJsonConverter() }
+			};
 		}
 
 		public override void HandleBasicDeliver(string consumerTag,
@@ -25,7 +29,9 @@ namespace Carting.Services.MessageBroker
 			ReadOnlyMemory<byte> body)
 		{
 			var content = Encoding.UTF8.GetString(body.ToArray());
-			var item = JsonSerializer.Deserialize<Item>(content);
+			var receivedItem = JsonConvert.DeserializeObject<Item>(content, _jsonSettings);
+			_cartingService.UpdateItem(receivedItem);
+
 			_channel.BasicAck(deliveryTag, multiple: false);
 		}
 	}

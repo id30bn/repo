@@ -13,5 +13,9 @@ namespace Carting.Core.Interfaces
 		void AddItemToCart(int cartId, Item item);
 
 		Item DeleteCartItem(int cartId, int itemId);
+
+		ICollection<Item> GetAllItems();
+
+		Item UpdateItem(Item newItem);
 	}
 }
