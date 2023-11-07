@@ -12,7 +12,7 @@ namespace MessageBroker.Shared.Services
 		public RabbitMqReceiverService(string routingKey, Func<IModel, DefaultBasicConsumer> createConsumer)
 		{
 			// use config file
-			var factory = new ConnectionFactory { Uri = new Uri("amqps://qimrjxng:BPiepPZNRJRa2R48Yu2TfK4wpsEhYBzG@cow.rmq2.cloudamqp.com/qimrjxng") };
+			var factory = new ConnectionFactory { Uri = new Uri("") };
 			_connection = factory.CreateConnection();
 			_channel = _connection.CreateModel();
 			_channel.ExchangeDeclare(exchange: "catalog_update", type: ExchangeType.Direct);

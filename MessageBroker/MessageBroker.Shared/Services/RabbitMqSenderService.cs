@@ -19,7 +19,7 @@ namespace MessageBroker.Shared.Services
 		public void SendMessage(string message)
 		{
 			// use config file
-			var factory = new ConnectionFactory() { Uri = new Uri("amqps://qimrjxng:BPiepPZNRJRa2R48Yu2TfK4wpsEhYBzG@cow.rmq2.cloudamqp.com/qimrjxng") };
+			var factory = new ConnectionFactory() { Uri = new Uri("") };
 			using (var connection = factory.CreateConnection())
 			using (var channel = connection.CreateModel()) {
 
