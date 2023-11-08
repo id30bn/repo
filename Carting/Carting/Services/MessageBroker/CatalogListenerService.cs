@@ -5,25 +5,25 @@ namespace Carting.Services.MessageBroker
 {
 	public class CatalogListenerService : BackgroundService
 	{
-		private readonly IRabbitMqReceiverService _listenerService;
+		private readonly IRabbitMqReceiverService _receiverService;
 
 		public CatalogListenerService(IRabbitMqFactory rabbitMqFactory)
 		{
-			_listenerService = rabbitMqFactory.CreateListener(RoutingKey.Item);
+			_receiverService = rabbitMqFactory.CreateReceiver(RoutingKey.Item);
 		}
 
 		protected override Task ExecuteAsync(CancellationToken cancellationToken)
 		{
 			cancellationToken.ThrowIfCancellationRequested();
 
-			_listenerService.ProcessMessage();
+			_receiverService.ConsumeMessage();
 
 			return Task.CompletedTask;
 		}
 
 		public override void Dispose()
 		{
-			_listenerService.Dispose();
+			_receiverService.Dispose();
 			base.Dispose();
 		}
 	}

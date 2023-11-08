@@ -4,6 +4,6 @@ namespace Carting.Services.MessageBroker
 {
 	public interface IRabbitMqFactory
 	{
-		public IRabbitMqReceiverService CreateListener(string routingKey);
+		public IRabbitMqReceiverService CreateReceiver(string routingKey);
 	}
 }

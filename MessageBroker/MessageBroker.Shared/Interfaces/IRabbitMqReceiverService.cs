@@ -2,6 +2,6 @@
 {
 	public interface IRabbitMqReceiverService : IDisposable
 	{
-		void ProcessMessage();
+		void ConsumeMessage();
 	}
 }

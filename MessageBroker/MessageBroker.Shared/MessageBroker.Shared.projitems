@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IRabbitMqReceiverService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IRabbitMqSenderService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RabbitMqOptions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RoutingKey.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RabbitMqListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RabbitMqSenderService.cs" />

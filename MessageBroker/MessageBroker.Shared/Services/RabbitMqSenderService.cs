@@ -7,6 +7,16 @@ namespace MessageBroker.Shared.Services
 {
 	public class RabbitMqSenderService : IRabbitMqSenderService
 	{
+		private string _connectionString;
+		private string _exchangeName;
+
+		public RabbitMqSenderService(string connectionString, string exchangeName)
+		{
+			_connectionString = connectionString;
+			_exchangeName = exchangeName;
+
+		}
+
 		public void SendMessage(object obj)
 		{
 			var serializeOptions = new JsonSerializerOptions {
@@ -18,19 +28,18 @@ namespace MessageBroker.Shared.Services
 
 		public void SendMessage(string message)
 		{
-			// use config file
-			var factory = new ConnectionFactory() { Uri = new Uri("") };
+			var factory = new ConnectionFactory() { Uri = new Uri(_connectionString) };
 			using (var connection = factory.CreateConnection())
 			using (var channel = connection.CreateModel()) {
 
-				channel.ExchangeDeclare(exchange: "catalog_update", type: ExchangeType.Direct);
+				channel.ExchangeDeclare(exchange: _exchangeName, type: ExchangeType.Direct);
 
 				var body = Encoding.UTF8.GetBytes(message);
 
 				var properties = channel.CreateBasicProperties();
 				properties.Persistent = true;
 
-				channel.BasicPublish(exchange: "catalog_update",
+				channel.BasicPublish(exchange: _exchangeName,
 					 routingKey: RoutingKey.Item,
 					 basicProperties: properties,
 					 body: body);
