@@ -20,7 +20,7 @@ namespace Carting.Services.MessageBroker
 		{
 			switch (routingKey) {
 				case RoutingKey.Item:
-					return new RabbitMqReceiverService(routingKey, channel => new ItemMessageHandler(channel, _cartingService), _options);
+					return new RabbitMqReceiverService(routingKey, channel => new ItemMessageHandler(channel, _cartingService, _options), _options);
 				default:
 					throw new ArgumentException(nameof(routingKey));
 			}

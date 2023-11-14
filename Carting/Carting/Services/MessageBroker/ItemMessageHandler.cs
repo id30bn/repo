@@ -1,4 +1,6 @@
 ﻿using Carting.Core.Models.Cart;
+using MessageBroker.Shared;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 
@@ -9,8 +11,8 @@ namespace Carting.Services.MessageBroker
 		private readonly ICartingService _cartingService;
 		private JsonSerializerSettings _jsonSettings;
 
-		public ItemMessageHandler(IModel channel, ICartingService cartingService)
-			: base(channel)
+		public ItemMessageHandler(IModel channel, ICartingService cartingService, IOptions<RabbitMqOptions> options)
+			: base(channel, options.Value.RetryCount)
 		{
 			_cartingService = cartingService;
 			_jsonSettings = new JsonSerializerSettings() {
