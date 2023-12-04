@@ -1,5 +1,6 @@
 using Application.Interfaces;
 using Application.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -29,6 +30,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[ResponseCache(CacheProfileName = "DefaultCacheProfile")]
 		[HttpGet]
+		[Authorize] // just to be authenticated
 		public async Task<ActionResult<IEnumerable<GetCategoryModel>>> Get()
 		{
 			return Ok(await _categoryService.ListAsync());
@@ -48,6 +50,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[ResponseCache(CacheProfileName = "DefaultCacheProfile")]
 		[HttpGet("{id}")]
+		[Authorize(Roles = "Buyer, Manager")]
 		public async Task<ActionResult<GetCategoryModel>> Get(int id)
 		{
 			var category = await _categoryService.GetByIdAsync(id);
@@ -75,6 +78,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpPut("{id}")]
+		[Authorize(Roles = "Manager")]
 		public async Task<ActionResult<GetCategoryModel>> Put(int id, PostCategoryModel category)
 		{
 			var result = await _categoryService.UpdateAsync(id, category);
@@ -96,6 +100,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpPost]
+		[Authorize(Roles = "Manager")]
 		public async Task<ActionResult<GetCategoryModel>> Post(PostCategoryModel category)
 		{
 			var createdCategory = await _categoryService.CreateAsync(category);
@@ -115,6 +120,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status406NotAcceptable)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpDelete("{id}")]
+		[Authorize(Roles = "Manager")]
 		public async Task<ActionResult<GetCategoryModel>> Delete(int id)
 		{
 			var category = await _categoryService.DeleteAsync(id);

@@ -1,6 +1,7 @@
 using Asp.Versioning;
 using Carting.Core.Models.Cart;
 using Carting.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Carting.API.Controllers
@@ -112,6 +113,8 @@ namespace Carting.API.Controllers
 			return Ok(deletedItem);
 		}
 
+
+		[Authorize(Policy = "OnlyForManagers")]
 		[HttpGet("items")]
 		public IActionResult GetItems()
 		{

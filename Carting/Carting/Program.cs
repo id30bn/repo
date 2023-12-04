@@ -6,12 +6,52 @@ using Carting.Services;
 using Carting.Services.MessageBroker;
 using Carting.Setup;
 using MessageBroker.Shared;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Newtonsoft.Json;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddAuthentication("Bearer")
+	.AddJwtBearer("Bearer", config => { // or use AddOAuth
+		config.RequireHttpsMetadata = false;
+		config.MetadataAddress = "http://localhost:8080/realms/course/.well-known/openid-configuration";
+		config.Audience = "carting_client_id"; //carting
+		config.SaveToken = true;
+		config.Events = new JwtBearerEvents();
+		config.Events.OnTokenValidated = ctx => {
+			// log ctx.SecurityToken here
+
+			ClaimsIdentity claimsIdentity = (ClaimsIdentity)ctx.Principal.Identity;
+			var knownRoles = new List<string> { "Manager", "Buyer" };
+
+			if (claimsIdentity.IsAuthenticated && claimsIdentity.HasClaim(claim => claim.Type == "realm_access")) {
+				var realmClaim = claimsIdentity.FindFirst(claim => claim.Type == "realm_access");
+				var realmClaimAsDictionary = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(realmClaim.Value);
+				var roles = realmClaimAsDictionary["roles"];
+				foreach (var role in roles) {
+					if (knownRoles.Contains(role)) {
+						claimsIdentity.AddClaim(new Claim("customTypeNameRole", role));
+					}
+				}
+			}
+
+			return Task.CompletedTask;
+		};
+	});
+
+builder.Services.AddAuthorization(opts => {
+	opts.AddPolicy("OnlyForManagers", policy => {
+		policy.RequireClaim("customTypeNameRole", "Manager"); //ClaimsIdentity.DefaultRoleClaimType
+	});
+	opts.AddPolicy("OnlyForBuyers", policy => {
+		policy.RequireClaim("customTypeNameRole", "Buyer");
+	});
+});
+
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -63,6 +103,7 @@ builder.Services.AddHostedService(serviceProvider => {
 });
 
 var app = builder.Build();
+app.UseAuthentication();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {

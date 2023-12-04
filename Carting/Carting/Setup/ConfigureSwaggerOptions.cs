@@ -29,8 +29,33 @@ namespace Carting.Setup
 				// XML-Docs support
 				var outputDocXmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 				var filePath = Path.Combine(AppContext.BaseDirectory, outputDocXmlFile);
-				options.IncludeXmlComments(filePath);
+				options.IncludeXmlComments(filePath);				
 			}
+
+			options.AddSecurityDefinition($"Bearer",
+					new OpenApiSecurityScheme {
+						In = ParameterLocation.Header,
+						Description = "Please enter into field the word 'Bearer' following by space and JWT",
+						Name = "Authorization",
+						Type = SecuritySchemeType.ApiKey
+					});
+			options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+				{
+					{
+					new OpenApiSecurityScheme()
+					{
+						Reference = new OpenApiReference()
+						{
+							Type = ReferenceType.SecurityScheme,
+							Id = "Bearer"
+						},
+						Scheme = "Bearer",
+						Type = SecuritySchemeType.Http,
+						Name = "Bearer",
+						In = ParameterLocation.Header
+					}, new List<string>()
+					}
+				});
 		}
 
 		private OpenApiInfo CreateVersionInfo(ApiVersionDescription description)
