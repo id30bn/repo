@@ -1,0 +1,70 @@
+{
+  "Routes": [
+    //common
+    {
+      "UpstreamPathTemplate": "/catalog/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7178
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/carting/{v}/{everything}",
+      "DownstreamPathTemplate": "/api/{v}/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7284
+        }
+      ]
+    },
+    // for aggregation
+    {
+      "UpstreamPathTemplate": "/catalog/items/{id}",
+      "DownstreamPathTemplate": "/catalog/items/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7178
+        }
+      ],
+      "Key": "Item"
+    },
+    {
+      "UpstreamPathTemplate": "/catalog/items/{id}/details",
+      "DownstreamPathTemplate": "/items/{id}/details",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7178
+        }
+      ],
+      "Key": "Details"
+    }
+  ],
+  "Aggregates": [
+    {
+      "UpstreamPathTemplate": "/aggregation/items/{id}",
+      "RouteKeys": [ //probably ocelot doesn't support aggregation routes from the same microservice (7178)
+        "Item",
+        "Details"
+      ]
+      //"Aggregator": "FakeDefinedAggregator" //not required (for complex logic if needed)
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7076"
+  }
+}
+
+// examples:
+//https://localhost:7076/carting/v2/carts/25
+//https://localhost:7076/catalog/items/1
+// aggregation: https://localhost:7076/aggregation/items/1

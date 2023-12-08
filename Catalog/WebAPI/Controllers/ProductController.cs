@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status406NotAcceptable)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpGet("{id}", Name = nameof(GetItem))]
-		[ResponseCache(CacheProfileName = "DefaultCacheProfile")]
+		//[ResponseCache(CacheProfileName = "DefaultCacheProfile")]
 		public async Task<ActionResult<GetItemModel>> GetItem(int id)
 		{
 			var category = await _productService.GetByIdAsync(id);
@@ -39,6 +39,18 @@ namespace WebAPI.Controllers
 				return NotFound();
 			}
 			return Ok(category);
+		}
+
+		/// <summary>
+		/// Get additional item information
+		/// </summary>
+		/// <param name="itemId">ID of the item to get</param>
+		/// <response code="200">The item was found</response>
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[HttpGet("{itemId}/details", Name = nameof(GetItemDetails))]
+		public async Task<ActionResult<GetItemModel>> GetItemDetails(int itemId)
+		{
+			return Ok(new { brand = "Samsung", model = "s10" });
 		}
 
 		/// <summary>
