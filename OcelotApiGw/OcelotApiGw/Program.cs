@@ -1,5 +1,7 @@
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Cache.CacheManager;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,21 +9,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("ocelot.json");
 
 //var identityUrl = _cfg.GetValue<string>("IdentityUrl"); //from config 
-//var authenticationProviderKey = "IdentityApiKey"; // use it instead of "Bearer"
+var authenticationProviderKey = "BearerScheme";
 
-//builder.Services.AddAuthentication("Bearer")
-//	.AddJwtBearer("Bearer", config => { // or use AddOAuth
-//		config.RequireHttpsMetadata = false;
-//		config.MetadataAddress = "http://localhost:8080/realms/course/.well-known/openid-configuration";
-//		config.Audience = "catalog";
-//		config.Authority = identityUrl;
-//		config.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters() {
-//			ValidAudiences = new[] { "catalog", "carting" }
-//		};
-//	});
+builder.Services.AddAuthentication(authenticationProviderKey)
+	.AddJwtBearer(authenticationProviderKey, config => {
+		config.RequireHttpsMetadata = false;
+		config.MetadataAddress = "http://localhost:8080/realms/course/.well-known/openid-configuration";
+		config.TokenValidationParameters = new TokenValidationParameters() {
+			ValidAudiences = new[] { "catalog", "carting" } // bearer token will contain such audience
+		};
+	});
 
-builder.Services.AddOcelot(builder.Configuration);
-	//.AddTransientDefinedAggregator<FakeDefinedAggregator>();
+builder.Services.AddOcelot(builder.Configuration)
+	.AddCacheManager(x => x.WithDictionaryHandle());
+//.AddTransientDefinedAggregator<FakeDefinedAggregator>();
 
 var app = builder.Build();
 

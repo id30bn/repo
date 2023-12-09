@@ -1,7 +1,8 @@
 {
   "Routes": [
-    //common
+    //auth example
     {
+      "UpstreamHttpMethod": [ "Post", "Put", "Delete" ],
       "UpstreamPathTemplate": "/catalog/{everything}",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "https",
@@ -10,8 +11,43 @@
           "Host": "localhost",
           "Port": 7178
         }
-      ]
+      ],
+      //"AllowedScopes": [ "catalog", "create" ] // corresponds to Manager role
     },
+    // caching
+    {
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamPathTemplate": "/catalog/items",
+      "DownstreamPathTemplate": "/items",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7178
+        }
+      ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "BearerScheme",
+       // "AllowedScopes": [ "catalog read profile email" ] // Ocelot sees KeyKloak scopes as one scope (one string instead of array)
+      }
+    },
+    {
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamPathTemplate": "/catalog/categories",
+      "DownstreamPathTemplate": "/categories",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7178
+        }
+      ],
+      "FileCacheOptions": { "TtlSeconds": 60 }
+    },
+    // catch all
     {
       "UpstreamPathTemplate": "/carting/{v}/{everything}",
       "DownstreamPathTemplate": "/api/{v}/{everything}",
@@ -23,7 +59,7 @@
         }
       ]
     },
-    // for aggregation
+    // aggregation (works only with GET)
     {
       "UpstreamPathTemplate": "/catalog/items/{id}",
       "DownstreamPathTemplate": "/catalog/items/{id}",

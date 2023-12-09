@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -64,6 +65,7 @@ namespace WebAPI.Controllers
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[HttpGet(Name = nameof(GetItems))]
 		[ResponseCache(CacheProfileName = "DefaultCacheProfile")]
+		[Authorize]
 		public async Task<ActionResult<IEnumerable<GetItemModel>>> GetItems([FromQuery] ItemQueryParams queryParams)
 		{
 			if (!HttpContext.Request.QueryString.HasValue) {
