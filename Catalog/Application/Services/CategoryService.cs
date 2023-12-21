@@ -34,9 +34,13 @@ namespace Application.Services
 			return _mapper.Map<GetCategoryModel>(domain);
 		}
 
-		public async Task<GetCategoryModel> GetByIdAsync(int id)
+		public async Task<GetCategoryModel> GetByIdAsync(int? id)
 		{
-			return _mapper.Map<GetCategoryModel>(await _uof.CategoryRepository.GetByIdAsync(id));
+			if(id == null) {
+				return null;
+			}
+
+			return _mapper.Map<GetCategoryModel>(await _uof.CategoryRepository.GetByIdAsync((int)id));
 		}
 
 		public async Task<IEnumerable<GetCategoryModel>> ListAsync()

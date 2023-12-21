@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csp
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MessageBroker.Shared", "..\MessageBroker\MessageBroker.Shared\MessageBroker.Shared.shproj", "{36F8CC31-D07C-47CF-B382-5947F1E5A39B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQLServer", "GraphQLServer\GraphQLServer.csproj", "{C5EB0B11-1EB7-4FE2-B98E-50A6B8DAD282}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{662CA9D2-B7AA-4711-AD2F-86BB54C4C7E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{662CA9D2-B7AA-4711-AD2F-86BB54C4C7E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{662CA9D2-B7AA-4711-AD2F-86BB54C4C7E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5EB0B11-1EB7-4FE2-B98E-50A6B8DAD282}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5EB0B11-1EB7-4FE2-B98E-50A6B8DAD282}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5EB0B11-1EB7-4FE2-B98E-50A6B8DAD282}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5EB0B11-1EB7-4FE2-B98E-50A6B8DAD282}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

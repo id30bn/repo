@@ -6,7 +6,7 @@ namespace Application.Interfaces
 	{
 		Task<IEnumerable<GetCategoryModel>> ListAsync();
 
-		Task<GetCategoryModel> GetByIdAsync(int id);
+		Task<GetCategoryModel> GetByIdAsync(int? id); // we should have it nullable as root category cannot have parentId
 
 		Task<GetCategoryModel> CreateAsync(PostCategoryModel category);
 

@@ -10,11 +10,12 @@ namespace Infrastructure.Persistence
 
 		public Task<List<Item>> FindListAsync(Expression<Func<Item, bool>> expression, int skip, int take)
 		{
-			return _context.Item
-				.Where(expression)
-				.Skip(skip)
-				.Take(take)
-				.ToListAsync();
+			var result = _context.Item.Where(expression).Skip(skip);
+			if (take != 0) {
+				result = result.Take(take);
+			}
+
+			return result.ToListAsync();
 		}
 
 		public override async Task<Item> UpdateAsync(int id, Item updatedEntity)
