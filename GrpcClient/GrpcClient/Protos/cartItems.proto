@@ -9,16 +9,13 @@ service CartItemsService {
 
   rpc GetCartItemsServerStreaming (CartItemsRequestMessage) returns (stream ItemMessage); // stream (not CartItemsReply)
 
-  rpc AddItemToCartClientStreaming (stream AddItemToCartRequestMessage) returns (CartItemsReplyMessage);
+  rpc AddItemToCartClientStreaming (stream ItemMessage) returns (AddItemsReplyMessage);
+
+  rpc AddItemToCartBiDirectionalStreaming (stream ItemMessage) returns (stream ItemMessage);
 }
 
 message CartItemsRequestMessage {
   int32 cartId = 1;
-}
-
-message AddItemToCartRequestMessage {
-	int32 cartId = 1;
-	ItemMessage item = 2;
 }
  
 message CartItemsReplyMessage {
@@ -26,14 +23,19 @@ message CartItemsReplyMessage {
   repeated ItemMessage items = 2;
 }
 
+message AddItemsReplyMessage {
+	int32 addedItemsCount = 1;
+}
+
 message ItemMessage {
 	int32 id = 1;
-	string name = 2;
-	string fullDescription = 3;
-	ImageMessage image = 4;
-	double price = 5;
-	int32 quantity = 6;
-	int32 categoryId = 7;
+	int32 cartId = 2; // this field doesn't exist in domain model (instead of AddItemToCartRequestMessage)
+	string name = 3;
+	string fullDescription = 4;
+	ImageMessage image = 5;
+	double price = 6;
+	int32 quantity = 7;
+	int32 categoryId = 8;
 
 }
 
@@ -41,3 +43,8 @@ message ImageMessage {
 	string url = 1;
 	string alt = 2;
 }
+
+//message AddItemToCartRequestMessage {
+//	int32 cartId = 1;
+//	ItemMessage item = 2;
+//}
