@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option csharp_namespace = "Carting.API.gRPC"; // all C# generated classes will have this namespace
+
+package cartingGrpcPackage;
+
+service CartItemsService {
+  rpc GetCartItemsUnary (CartItemsRequestMessage) returns (CartItemsReplyMessage);
+
+  rpc GetCartItemsServerStreaming (CartItemsRequestMessage) returns (stream ItemMessage); // stream (not CartItemsReply)
+
+  rpc AddItemToCartClientStreaming (stream AddItemToCartRequestMessage) returns (CartItemsReplyMessage);
+}
+
+message CartItemsRequestMessage {
+  int32 cartId = 1;
+}
+
+message AddItemToCartRequestMessage {
+	int32 cartId = 1;
+	ItemMessage item = 2;
+}
+ 
+message CartItemsReplyMessage {
+  int32 cartId = 1;
+  repeated ItemMessage items = 2;
+}
+
+message ItemMessage {
+	int32 id = 1;
+	string name = 2;
+	string fullDescription = 3;
+	ImageMessage image = 4;
+	double price = 5;
+	int32 quantity = 6;
+	int32 categoryId = 7;
+
+}
+
+message ImageMessage {
+	string url = 1;
+	string alt = 2;
+}

@@ -1,5 +1,7 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using AutoMapper;
+using Carting.API.gRPC;
 using Carting.Core.Interfaces;
 using Carting.Dal.LiteDb;
 using Carting.Services;
@@ -7,7 +9,9 @@ using Carting.Services.MessageBroker;
 using Carting.Setup;
 using MessageBroker.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Newtonsoft.Json;
+using System.Reflection;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,7 +55,7 @@ builder.Services.AddAuthorization(opts => {
 	});
 });
 
-
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -102,6 +106,8 @@ builder.Services.AddHostedService(serviceProvider => {
 	}
 });
 
+builder.Services.AddGrpc();
+
 var app = builder.Build();
 app.UseAuthentication();
 
@@ -123,5 +129,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGrpcService<CartItemsGrpcService>();
 
 app.Run();
